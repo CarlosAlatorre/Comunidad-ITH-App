@@ -36,7 +36,7 @@ angular.module('starter', ['ionic', 'starter.controllers'])
 		views: {
 			'menuContent': {
 				templateUrl: "templates/news.html",
-				controller: 'NewsCtrl'
+				controller: 'NewsCtrl as vm'
 	  		}
 		}
  	})
@@ -49,20 +49,29 @@ angular.module('starter', ['ionic', 'starter.controllers'])
 	  		}
 		}
   	})
-	.state('app.followers', {
-		url: "/followers",
-	  	views: {
-			'menuContent': {
-		 		templateUrl: "templates/followers.html"
-			}
-	  	}
-	})
 	.state('app.events', {
 		url: "/events",
 		views: {
 			'menuContent': {
 				templateUrl: "templates/events.html",
-				controller: 'EventsCtrl'
+				controller: 'EventsCtrl as vm'
+	  		}
+		}
+ 	})
+	 .state('app.newDetails', {
+		url: "/newDetails",
+		views: {
+			'menuContent': {
+				templateUrl: "templates/newDetails.html",
+				controller: 'newDetailsCtrl as vm'
+	  		}
+		}
+ 	})
+	 .state('app.notice', {
+		url: "/notice",
+		views: {
+			'menuContent': {
+				templateUrl: "templates/notice.html"
 	  		}
 		}
  	})

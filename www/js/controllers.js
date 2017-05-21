@@ -58,26 +58,43 @@ angular.module('starter.controllers', [])
 
 })
 
-.controller('NewsCtrl',function($scope, $ionicPopup){
-	$scope.infoApp = function() {
-		var alertPopup = $ionicPopup.alert({
-			title: '<b class="assertive">Template</b>',
-			template: '<center>Template ionSunset </center>',
-			buttons: [
-				{
-					text: 'Ok',
-					type: 'button-dark'
-				}
-			]
-		});
-		alertPopup.then(function(res) {
-			console.log('Thank you!!');
-		});
+.controller('NewsCtrl',function($scope, $location, $ionicModal){
+		var vm = this;
+
+	//public functions
+	vm.openNew = openNew;
+
+	//Private functions
+	function openNew(newO){
+		$scope.modal.show();
+	}
+
+	// Create the login modal that we will use later
+	$ionicModal.fromTemplateUrl('templates/newDetails.html', {
+		scope: $scope,
+		animation: 'slide-in-up'
+	}).then(function(modal) {
+		$scope.modal = modal;
+	});
+
+	// Triggered in the login modal to close it
+	$scope.closeLogin = function() {
+		$scope.modal.hide();
 	};
+
 })
 
 .controller('MenuActiveCtrl', function($scope, $location) {
     $scope.isActive = function(route) {
         return route === $location.path();
     };
+})
+.controller('EventsCtrl', function($scope, $location) {
+    $scope.isActive = function(route) {
+        return route === $location.path();
+    };
+})
+.controller('newDetailsCtrl', function($scope, $location) {
+
 });
+
