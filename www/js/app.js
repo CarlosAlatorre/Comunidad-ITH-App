@@ -32,10 +32,10 @@ angular.module('starter', ['ionic', 'starter.controllers'])
   	})
 
   	.state('app.news', {
-		url: "/news-feed",
+		url: "/news",
 		views: {
 			'menuContent': {
-				templateUrl: "templates/news-feed.html",
+				templateUrl: "templates/news.html",
 				controller: 'NewsCtrl'
 	  		}
 		}
@@ -57,16 +57,17 @@ angular.module('starter', ['ionic', 'starter.controllers'])
 			}
 	  	}
 	})
-	.state('app.listUsers', {
-		url: "/listUsers",
-	  	views: {
+	.state('app.events', {
+		url: "/events",
+		views: {
 			'menuContent': {
-		 		templateUrl: "templates/listUsers.html"
-			}
-	  	}
-	});
+				templateUrl: "templates/events.html",
+				controller: 'EventsCtrl'
+	  		}
+		}
+ 	})
 
   	// if none of the above states are matched, use this as the fallback
-  	$urlRouterProvider.otherwise('/app/listUsers');
+  	$urlRouterProvider.otherwise('/app/news');
 
 });

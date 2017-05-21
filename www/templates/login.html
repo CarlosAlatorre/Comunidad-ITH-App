@@ -6,25 +6,23 @@
 	  	<!-- *class logo / logo company or app -->
 	  	<div class="logo">
 	  		<img ng-src="img/logo.png" alt="Company">
+			  <h2 class="title">Comunidad ITH</h2>
 	  	</div>
 	  	<!-- form login with button sing in and facebook login style -->
 		<form ng-submit="doLogin()">
 		  	<div class="list list-inset">
-				<label class="item item-input">
-				<input type="text" placeholder="Username">
-				</label>
-				<label class="item item-input">
-				<input type="password" placeholder=".........">
-				</label>
-				<button class="button button-block button-assertive">
-		  			SING IN
+				<button class="button button-block button-outline button-assertive">
+					<i class="ion-social-google"></i> Gmail
 				</button>
 				<span>-or-</span>
 				<button class="button button-block button-outline button-assertive">
-					Facebook
+					<i class="ion-social-facebook"></i> Facebook
 				</button>
-				<a href="#">Create Acount</a>
 			</div>
+			
 		</form>
   	</ion-content>
+	  <div class="footer">
+		Copyright SergioSilvas Productions 2017
+	</div>
 </ion-modal-view>

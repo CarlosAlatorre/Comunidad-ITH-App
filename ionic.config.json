@@ -1,5 +1,5 @@
 {
-  "name": "myApp",
+  "name": "ionic-app-base",
   "app_id": "",
-  "type": "ionic-angular"
+  "type": "ionic1"
 }
