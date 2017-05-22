@@ -14,14 +14,14 @@
         <ion-nav-view name="menuContent"></ion-nav-view>
         </ion-side-menu-content>
         <!-- *controller MenuActiveCtrl /  active items menu -->
-        <ion-side-menu side="left" expose-aside-when="large" ng-controller="MenuActiveCtrl">
+        <ion-side-menu side="left" expose-aside-when="large" ng-controller="MenuActiveCtrl as vm">
         <!-- button in header-bar -->
         <ion-content>
             <ul class="list">
                 <!-- item-avatar user with status -->
                 <a class="item item-avatar" nav-clear>
-                    <img src="img/78.jpg">
-                    <h2>Rebecca Boscop</h2>
+                    <img ng-src="{{vm.user.photoURL}}">
+                    <h2>{{vm.user.displayName}}</h2>
                     <!--<p>I'm time study</p>-->
                 </a>
                 <!-- menu items  with style active, inactive on off -->
@@ -38,7 +38,7 @@
                     <i class="icon ion-ios-person-outline"></i>Perfil
                 </a>
                 <!-- *class quit / style logout -->
-                <a class="item item-icon-left quit" nav-clear menu-close ng-click="infoApp2()">
+                <a class="item item-icon-left quit" nav-clear menu-close ng-click="vm.signOut()">
                     <i class="icon ion-ios-arrow-thin-right"></i>Cerrar sesion
                 </a>
             </ul>

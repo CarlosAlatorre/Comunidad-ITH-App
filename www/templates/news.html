@@ -2,109 +2,21 @@
 
 <ion-view view-title="Noticias">
 	<ion-content>
-		<div class="new" ng-click="vm.openNew(new)">
-			<img src="img/feed/1.JPG">
-			<p class="social-img-up">
+		<div class="new" ng-click="vm.openNew(new)" ng-repeat="new in vm.news">
+			<img ng-src="{{new.coverImage}}">
+			<p class="social-img-up" ng-if="new.likes">
 			    	<a>
 			    		<i class="icon ion-thumbsup"></i>
-			      		10
-			    	</a>
-					<a>
-			    		<i class="icon ion-ios-chatbubble"></i>
-			      		10
+			      		{{new.likes.length}}
 			    	</a>
 			    </p>
 				<div class="date">			
-					<span class="month">May</span><br>
-					<span class="day">9</span>
+					<span class="month">{{new.createdDate | date:'EEE'}}</span><br>
+					<span class="day">{{new.createdDate | date:'d'}}</span>
 				</div>
 			<div class="description">
-				<h3>Realizan Examen nuevo ingreso</h3>
-				<span>Publicado por Difusion </span>
-			</div>
-		</div>
-		<div class="new">
-			<img src="img/feed/2.JPG">
-			<p class="social-img-up">
-			    	<a>
-			    		<i class="icon ion-thumbsup"></i>
-			      		10
-			    	</a>
-					<a>
-			    		<i class="icon ion-ios-chatbubble"></i>
-			      		10
-			    	</a>
-			    </p>
-				<div class="date">			
-					<span class="month">May</span><br>
-					<span class="day">10</span>
-				</div>
-			<div class="description">
-				<h3>Realizan Examen nuevo ingreso</h3>
-				<span>Publicado por Difusion </span>
-			</div>
-		</div>
-		<div class="new">
-			<img src="img/feed/3.JPG">
-			<p class="social-img-up">
-			    	<a>
-			    		<i class="icon ion-thumbsup"></i>
-			      		10
-			    	</a>
-					<a>
-			    		<i class="icon ion-ios-chatbubble"></i>
-			      		10
-			    	</a>
-			    </p>
-				<div class="date">			
-					<span class="month">May</span><br>
-					<span class="day">10</span>
-				</div>
-			<div class="description">
-				<h3>Realizan Examen nuevo ingreso</h3>
-				<span>Publicado por Difusion </span>
-			</div>
-		</div>
-		<div class="new">
-			<img src="img/feed/1.JPG">
-			<p class="social-img-up">
-			    	<a>
-			    		<i class="icon ion-thumbsup"></i>
-			      		10
-			    	</a>
-					<a>
-			    		<i class="icon ion-ios-chatbubble"></i>
-			      		10
-			    	</a>
-			    </p>
-				<div class="date">			
-					<span class="month">May</span><br>
-					<span class="day">10</span>
-				</div>
-			<div class="description">
-				<h3>Realizan Examen nuevo ingreso</h3>
-				<span>Publicado por Difusion </span>
-			</div>
-		</div>
-		<div class="new">
-			<img src="img/feed/4.JPG">
-			<p class="social-img-up">
-			    	<a>
-			    		<i class="icon ion-thumbsup"></i>
-			      		10
-			    	</a>
-					<a>
-			    		<i class="icon ion-ios-chatbubble"></i>
-			      		10
-			    	</a>
-			    </p>
-				<div class="date">			
-					<span class="month">May</span><br>
-					<span class="day">10</span>
-				</div>
-			<div class="description">
-				<h3>Realizan Examen nuevo ingreso</h3>
-				<span>Publicado por Difusion </span>
+				<h3>{{new.title}}</h3>
+				<span>Publicado por {{new.by}} </span>
 			</div>
 		</div>
 	</ion-content>

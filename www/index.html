@@ -23,4 +23,19 @@
   <body ng-app="starter">
     <ion-nav-view></ion-nav-view>
   </body>
+  <script src="https://www.gstatic.com/firebasejs/4.0.0/firebase.js"></script>
+  <!-- AngularFire -->
+  <script src="https://cdn.firebase.com/libs/angularfire/2.3.0/angularfire.min.js"></script>
+  <script>
+    // Initialize Firebase
+    var config = {
+      apiKey: "AIzaSyAtWOGnQO9_3ftw9KwjZGIAsoM-y3ULx8k",
+      authDomain: "comunidad-ith-c9124.firebaseapp.com",
+      databaseURL: "https://comunidad-ith-c9124.firebaseio.com",
+      projectId: "comunidad-ith-c9124",
+      storageBucket: "comunidad-ith-c9124.appspot.com",
+      messagingSenderId: "1012377536597"
+    };
+    firebase.initializeApp(config);
+  </script>
 </html>

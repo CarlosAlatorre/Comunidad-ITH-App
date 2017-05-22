@@ -4,41 +4,42 @@
 	<ion-content class="new-details">
 		<i class="back ion-ios-arrow-back" ng-click="closeLogin()"></i>
 		<div class="cover">
-			<img class="cover-image" src="img/feed/1.JPG">
+			<img class="cover-image" ng-src="{{vm.currentNew.coverImage}}">
 
-			<div class="date">
-				<span class="month">May</span><br>
-				<span class="day">9</span>
+			<div class="date">			
+				<span class="month">{{vm.currentNew.createdDate | date:'EEE'}}</span><br>
+				<span class="day">{{vm.currentNew.createdDate | date:'d'}}</span>
 			</div>
 
 		</div>
 		
 		<div class="title">
-			<h3>REALIZA ITH EXAMEN NUEVO INGRESO</h3>
-			<div class="tag">
+			<h3>{{vm.currentNew.title}}</h3>
+			<div class="tag" ng-if="vm.currentNew.tags">
 				<span class="general">General</span>
 			</div>
-			<span>Publicado por el Difusion</span>
+			<span>Publicado por  {{vm.currentNew.by}}</span>
 		</div>
 		<div class="content">
-			<pre class="pre">En busca de un lugar dentro de las aulas del Instituto Tecnológico de Hermosillo (ITH), dos mil 241 jóvenes procedentes de todo el estado, llevaron a cabo el examen de selección para nuevo ingreso. 
-				
-La Jefa del Departamento de Desarrollo Académico, Julia Graciela Preciado León, indicó que será el próximo 05 de junio cuando a través de la página del instituto, www.ith.mx, se den a conocer los resultados de la prueba que aplica el Centro Nacional de Evaluación (Ceneval). 
-				
-“Fueron poco más de cuatro mil los jóvenes que hicieron el pre registro de ellos, dos mil 241 finalizaron el proceso y son los que se presentaron a la prueba que aplica personal que envía Ceneval”. 
-				
-Preciado León explicó que “la respuesta que tuvimos fue muy buena por parte de los jóvenes, afortunadamente todo se desarrollado de manera tranquila por lo que ahora solo resta esperar la entrega de resultados”. 
-			</pre>
+			<pre class="pre">{{content.content}}</pre>
+		</div>
+		<div class="footer">
+			<p class="social-img-up" ng-if="vm.currentNew.likes">
+			    	<a>
+			    		<i class="icon ion-thumbsup"></i>
+			      		{{vm.currentNew.likes.length}}
+			    	</a>
+			    </p>
 		</div>
 
 		<div class="item tabs tabs-secondary tabs-icon-left red-bg">
-			<a class="tab-item">
+			<a class="tab-item {{vm.currentNew.likes && vm.currentNew.likes.indexOf(vm.currentSession.uid) == -1 ? 'b-blue' : ''}}" ng-click="vm.like()">
 				<i class="icon ion-thumbsup"></i>
-				Like
+				{{vm.currentNew.likes && vm.currentNew.likes.indexOf(vm.currentSession.uid) == -1 ? 'Me gusta' : 'Ya no me gusta'}}
 			</a>
 			<a class="tab-item">
 				<i class="icon ion-ios-chatbubble-outline"></i>
-				Comment
+				Comentar
 			</a>
 		</div>
 
