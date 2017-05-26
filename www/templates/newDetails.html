@@ -2,7 +2,7 @@
 
 <ion-view view-title="" class="animated fadeIn">
 	<ion-content class="new-details">
-		<i class="back ion-ios-arrow-back" ng-click="closeLogin()"></i>
+		<i class="back ion-ios-arrow-back" ng-click="closeNew()"></i>
 		<div class="cover">
 			<img class="cover-image" ng-src="{{vm.currentNew.coverImage}}">
 
@@ -21,7 +21,7 @@
 			<span>Publicado por  {{vm.currentNew.by}}</span>
 		</div>
 		<div class="content">
-			<pre class="pre">{{content.content}}</pre>
+			<pre class="pre">{{content.$value}}</pre>
 		</div>
 		<div class="footer">
 			<p class="social-img-up" ng-if="vm.currentNew.likes">
@@ -33,11 +33,11 @@
 		</div>
 
 		<div class="item tabs tabs-secondary tabs-icon-left red-bg">
-			<a class="tab-item {{vm.currentNew.likes && vm.currentNew.likes.indexOf(vm.currentSession.uid) == -1 ? 'b-blue' : ''}}" ng-click="vm.like()">
+			<a class="tab-item" ng-click="vm.like()">
 				<i class="icon ion-thumbsup"></i>
-				{{vm.currentNew.likes && vm.currentNew.likes.indexOf(vm.currentSession.uid) == -1 ? 'Me gusta' : 'Ya no me gusta'}}
+				{{vm.currentNew.iLiked? 'Ya no me gusta' : 'Me gusta'}}
 			</a>
-			<a class="tab-item">
+			<a class="tab-item" ng-click="vm.openComments()">
 				<i class="icon ion-ios-chatbubble-outline"></i>
 				Comentar
 			</a>

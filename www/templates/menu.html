@@ -18,10 +18,10 @@
         <!-- button in header-bar -->
         <ion-content>
             <ul class="list">
-                <!-- item-avatar user with status -->
+                <!-- item-avatar user with status <--></-->
                 <a class="item item-avatar" nav-clear>
-                    <img ng-src="{{vm.user.photoURL}}">
-                    <h2>{{vm.user.displayName}}</h2>
+                    <img ng-src="{{vm.currentUser.profilePicture}}">
+                    <h2>{{vm.currentUser.username}}</h2>
                     <!--<p>I'm time study</p>-->
                 </a>
                 <!-- menu items  with style active, inactive on off -->
@@ -31,12 +31,12 @@
                 <a class="item item-icon-left" ng-class="{active:isActive('/app/events')}" nav-clear menu-close href="#/app/events">
                     <i class="icon ion-android-calendar"></i>Eventos
                 </a>
-                <a class="item item-icon-left" ng-class="{active:isActive('/app/events')}" nav-clear menu-close href="#/app/notice">
+                <a class="item item-icon-left" ng-class="{active:isActive('/app/notice')}" nav-clear menu-close href="#/app/notice">
                     <i class="icon ion-android-notifications"></i>Avisos
                 </a>
-                <a class="item item-icon-left" ng-class="{active:isActive('/app/profile')}" nav-clear menu-close href="#/app/profile">
+                <!--<a class="item item-icon-left" ng-class="{active:isActive('/app/profile')}" nav-clear menu-close href="#/app/profile">
                     <i class="icon ion-ios-person-outline"></i>Perfil
-                </a>
+                </a>-->
                 <!-- *class quit / style logout -->
                 <a class="item item-icon-left quit" nav-clear menu-close ng-click="vm.signOut()">
                     <i class="icon ion-ios-arrow-thin-right"></i>Cerrar sesion

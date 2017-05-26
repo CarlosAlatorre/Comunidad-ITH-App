@@ -58,12 +58,14 @@ angular.module('starter.controllers', [])
 
 })
 
-.controller('NewsCtrl',function($scope, $location, $ionicModal,  $timeout, $firebaseArray, $firebaseObject){
+.controller('NewsCtrl',function($scope, $location, $ionicModal,  $timeout, $firebaseArray, $firebaseObject, $rootScope){
 	var vm = this;
 	vm.currentNew = null;
 	//public functions
 	vm.openNew = openNew;
+	vm.openComments = openComments;
 	vm.like = like;
+	vm.sendComment = sendComment;
 	//Private functions
 	function activate(){
 		  var ref = firebase.database().ref().child('news');
@@ -71,18 +73,39 @@ angular.module('starter.controllers', [])
 		vm.news = $firebaseArray(ref);
 
 		$timeout(function(){
-			vm.currentUser = firebase.auth().currentUser;
+			var currentUser = firebase.auth().currentUser;
+			var ref = firebase.database().ref().child('users/' + currentUser.uid);
+			vm.currentUser = $firebaseObject(ref);
 		}, 1000);
 	}
 	activate();
 	function openNew(newO){
 		vm.currentNew = newO;
+		if(!vm.currentNew.likes){
+			vm.currentNew.likes = [];
+			vm.currentNew.iLiked = false;
+		}else{
+			vm.currentNew.iLiked = vm.currentNew.likes.indexOf(vm.currentUser.userId) != -1;
+		}
 		var ref = firebase.database().ref().child('contents/' + newO.$id);
 		// download the data into a local object
 		var syncObject = $firebaseObject(ref);
          syncObject.$bindTo($scope, "content");
 		$scope.modal.show();
 	}
+	function openComments(){
+		var ref = firebase.database().ref().child('comments/' + vm.currentNew.$id);
+		vm.comments = $firebaseArray(ref);
+		$timeout(function(){
+			var elem = document.getElementById('comments');
+			elem.scrollTop = elem.scrollHeight;
+		},4000)
+		$scope.modalComments.show();
+	}
+
+	$scope.closeComment = function() {
+		$scope.modalComments.hide();
+	};
 
 	// Create the login modal that we will use later
 	$ionicModal.fromTemplateUrl('templates/newDetails.html', {
@@ -91,38 +114,67 @@ angular.module('starter.controllers', [])
 	}).then(function(modal) {
 		$scope.modal = modal;
 	});
+	$ionicModal.fromTemplateUrl('templates/comments.html', {
+		scope: $scope,
+		animation: 'slide-in-up'
+	}).then(function(modal) {
+		$scope.modalComments = modal;
+	});
 
 	// Triggered in the login modal to close it
-	$scope.closeLogin = function() {
+	$scope.closeNew = function() {
 		$scope.modal.hide();
 	};
 
 	function like(){
 		if(vm.currentNew.likes){
-			var index = vm.currentNew.likes.indexOf(vm.currentUser.uid);
+			var index = vm.currentNew.likes.indexOf(vm.currentUser.userId);
 			if(index != -1){
 				vm.currentNew.likes.splice(index, 1);
 			}else{
-				vm.currentNew.likes.push(vm.currentUser.uid);
+				vm.currentNew.likes.push(vm.currentUser.userId);
 			}
 		}else{
 			vm.currentNew.likes = [];
-			vm.currentNew.likes.push(vm.currentUser.uid);
+			vm.currentNew.likes.push(vm.currentUser.userId);
 		}
-		vm.news.$save(vm.currentNew);
+		firebase.database().ref('news/' + vm.currentNew.$id).update({
+			likes: vm.currentNew.likes
+		});
+		if(!vm.currentNew.likes){
+			vm.currentNew.likes = [];
+			vm.currentNew.iLiked = false;
+		}else{
+			vm.currentNew.iLiked = vm.currentNew.likes.indexOf(vm.currentUser.userId) != -1;
+		}
+	}
+
+	function sendComment(){
+		if(vm.messageToSend && vm.messageToSend != ""){
+			firebase.database().ref('comments/' + vm.currentNew.$id).push({
+				image: vm.currentUser.profilePicture ? vm.currentUser.profilePicture: '',
+				message: vm.messageToSend,
+				name: vm.currentUser.username,
+				createdDate: new Date().getTime()
+			});
+			vm.messageToSend = "";
+		}
 	}
 
 })
 
-.controller('MenuActiveCtrl', function($scope, $location, $timeout, $state) {
+.controller('MenuActiveCtrl', function($scope, $location, $timeout, $state,  $firebaseObject) {
     var vm = this;
 	vm.signOut = signOut;
 
 	//Private function
 	function activate(){
 		$timeout(function(){
-			vm.user = firebase.auth().currentUser;
+			var currentUser = firebase.auth().currentUser;
+			var ref = firebase.database().ref().child('users/' + currentUser.uid);
+			vm.currentUser = $firebaseObject(ref);
 		}, 1000);
+	
 	}
 	activate();
 
@@ -148,11 +200,25 @@ angular.module('starter.controllers', [])
 
 	//public functions
 	vm.singInWithFacebook = singInWithFacebook;
+	vm.signInWithEmail = signInWithEmail;
 
 	//Private functions
 	function activate(){
 	}
 	activate();
+
+	function signInWithEmail(){
+		firebase.auth().signInWithEmailAndPassword(vm.email, vm.password).then(function(response){
+			$state.go('app.news');
+		})
+		.catch(function(error) {
+			// Handle Errors here.
+			var errorCode = error.code;
+			var errorMessage = error.message;
+			// ...
+			vm.password = "";
+		});
+	}
 
 	function singInWithFacebook(){
 		var provider = new firebase.auth.FacebookAuthProvider();
@@ -204,10 +270,6 @@ angular.module('starter.controllers', [])
 		}).catch(function(response){
 			writeUserData(currentUser.uid, currentUser.displayName, currentUser.email, currentUser.photoURL);
 		});
-		
-	}
-
-	function getUser(userId){
 		
 	}
 

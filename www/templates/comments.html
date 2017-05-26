@@ -1,0 +1,30 @@
+<!-- (*) assigned classes -->
+
+<ion-view view-title=""class="comments"1> 
+
+    <div class="head">
+        <i class="back ion-ios-arrow-back" ng-click="closeComment()"></i>
+        <h4>Comentarios</h4> 
+    </div>
+	<ion-content >
+        <div id="comments" class="content">
+            <div class="list card" ng-repeat="comment in vm.comments">
+                <div class="row">
+                    <div class="col-img">
+                        <img ng-src="{{comment.image ? comment.image : './img/78.jpg'}}" alt="" class="img-responsive">
+                    </div>
+                    <div class="col-body">
+                        <span class="name">{{comment.name}}</span><span class="time">{{comment.createdDate | date:'dd/MM/yy hh:mm a'}}</span>
+                         <p>{{comment.message}}</p>
+                    </div>
+                </div>
+                
+            </div>
+        </div>
+       
+	</ion-content>
+     <div class="footer">
+            <input type="text" placeholder="Escribe tu mensaje..." ng-model="vm.messageToSend">
+		    <i class="ion-ios-paperplane" ng-click="vm.sendComment()"></i>
+        </div>
+</ion-view>

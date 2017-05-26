@@ -11,10 +11,20 @@
 	  	<!-- form login with button sing in and facebook login style -->
 		<form ng-submit="doLogin()">
 		  	<div class="list list-inset">
-				<button class="button button-block button-outline button-assertive">
+				  <label class="item item-input">
+				<input type="text" placeholder="Username" ng-model="vm.email">
+				</label>
+				<label class="item item-input">
+				<input type="password" placeholder="........." ng-model="vm.password">
+				</label>
+				<button class="button button-block button-assertive" ng-click="vm.signInWithEmail()">
+		  			Inicia Sesion
+				</button>
+				<span>-o-</span>
+				<!--<button class="button button-block button-outline button-assertive">
 					<i class="ion-social-google"></i> Gmail
 				</button>
-				<span>-or-</span>
+				<span>-or-</span>-->
 				<button class="button button-block button-outline button-assertive" ng-click="vm.singInWithFacebook()">
 					<i class="ion-social-facebook"></i> Facebook
 				</button>
