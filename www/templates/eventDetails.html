@@ -4,21 +4,21 @@
 	<ion-content class="new-details">
 		<i class="back ion-ios-arrow-back" ng-click="closeNew()"></i>
 		<div class="cover">
-			<img class="cover-image" ng-src="{{vm.currentNew.coverImage}}">
+			<img class="cover-image" ng-src="{{vm.currentEvent.coverImage}}">
 
 			<div class="date">			
-				<span class="month">{{(vm.currentNew.createdDate | date:'MMM') | capitalize}}</span><br>
-				<span class="day">{{vm.currentNew.createdDate | date:'d'}}</span>
+				<span class="month">{{vm.currentEvent.date | date:'EEE'}}</span><br>
+				<span class="day">{{vm.currentEvent.date | date:'d'}}</span>
 			</div>
 
 		</div>
 		
 		<div class="title">
-			<h3>{{vm.currentNew.title}}</h3>
-			<div class="tag" ng-if="vm.currentNew.tags">
+			<h3>{{vm.currentEvent.title}}</h3>
+			<div class="tag" ng-if="vm.currentEvent.tags">
 				<span class="general">General</span>
 			</div>
-			<span>Publicado por {{vm.currentNew.by}}</span>
+			<span>Publicado por {{vm.currentEvent.by}}</span>
 		</div>
 		<div class="content">
 			<pre class="pre">{{content.$value}}</pre>
@@ -33,9 +33,9 @@
 		</div>-->
 
 		<div class="item tabs tabs-secondary tabs-icon-left red-bg">
-			<a class="tab-item" ng-click="vm.like()">
+			<a class="tab-item" ng-click="vm.attend()">
 				<i class="icon ion-thumbsup"></i>
-				{{vm.currentNew.iLiked? 'Ya no me gusta' : 'Me gusta'}}
+				{{vm.currentEvent.attend ? 'Asistir' : 'Asistire'}}
 			</a>
 			<a class="tab-item" ng-click="vm.openComments()">
 				<i class="icon ion-ios-chatbubble-outline"></i>

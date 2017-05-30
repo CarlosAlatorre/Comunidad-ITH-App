@@ -11,7 +11,7 @@
 			    	</a>
 			    </p>
 				<div class="date">			
-					<span class="month">{{new.createdDate | date:'EEE'}}</span><br>
+					<span class="month">{{(new.createdDate | date:'MMM') | capitalize}}</span><br>
 					<span class="day">{{new.createdDate | date:'d'}}</span>
 				</div>
 			<div class="description">

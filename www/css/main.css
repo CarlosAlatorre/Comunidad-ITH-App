@@ -161,3 +161,23 @@
 .col-body .name, .col-body p{
     color: #333;
 }
+.events .date{
+    top: 0;
+    right: 20px;
+    height: 63px;
+}
+.events .list .head{
+    padding: 20px;
+    max-width: 80%;
+}
+.events .list .head h2{
+    color: #333;
+}
+.events .list .body p{
+    margin: 5px;
+    font-size: 18px;
+}
+.events .list .body{
+    padding-top: 0px;
+    color: #333;
+}

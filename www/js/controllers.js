@@ -190,10 +190,105 @@ angular.module('starter.controllers', [])
 		});
 	}
 })
-.controller('EventsCtrl', function($scope, $location) {
-    $scope.isActive = function(route) {
-        return route === $location.path();
-    };
+.controller('EventsCtrl', function($scope, $location, $firebaseObject, $firebaseArray, $timeout, $ionicModal) {
+    var vm = this
+
+	function activate(){
+		var ref = firebase.database().ref().child('events');
+		// download the data into a local object
+		vm.events = $firebaseArray(ref);
+
+		$timeout(function(){
+			var currentUser = firebase.auth().currentUser;
+			var ref = firebase.database().ref().child('users/' + currentUser.uid);
+			vm.currentUser = $firebaseObject(ref);
+		}, 1000);
+	}
+	activate();
+
+	function openEvent(event){
+		vm.currentEvent = newO;
+		if(!vm.currentEvent.assistance){
+			vm.currentEvent.assistance = [];
+			vm.currentEvent.attend = false;
+		}else{
+			vm.currentEvent.attend = vm.currentEvent.assistance.indexOf(vm.currentUser.userId) != -1;
+		}
+		var ref = firebase.database().ref().child('contents/' + event.$id);
+		// download the data into a local object
+		var syncObject = $firebaseObject(ref);
+         syncObject.$bindTo($scope, "content");
+		$scope.modal.show();
+	}
+	function attendForEvent(event){
+		if(event.assistance){
+			var index = event.assistance.indexOf(vm.currentUser.userId);
+			if(index != -1){
+				event.assistance.splice(index, 1);
+			}else{
+				event.assistance.push(vm.currentUser.userId);
+			}
+		}else{
+			event.assistance = [];
+			event.assistance.push(vm.currentUser.userId);
+		}
+		firebase.database().ref('events/' + event.$id).update({
+			assistance: event.assistance
+		});
+		if(!event.assistance){
+			event.assistance = [];
+			event.attend = false;
+		}else{
+			event.attend = event.assistance.indexOf(vm.currentUser.userId) != -1;
+		}
+	}
+
+	function attend(){
+		if(vm.currentEvent.assistance){
+			var index = vm.currentEvent.assistance.indexOf(vm.currentUser.userId);
+			if(index != -1){
+				vm.currentEvent.assistance.splice(index, 1);
+			}else{
+				vm.currentEvent.assistance.push(vm.currentUser.userId);
+			}
+		}else{
+			vm.currentEvent.assistance = [];
+			vm.currentEvent.assistance.push(vm.currentUser.userId);
+		}
+		firebase.database().ref('events/' + vm.currentEvent.$id).update({
+			assistance: vm.currentEvent.assistance
+		});
+		if(!vm.currentEvent.assistance){
+			vm.currentEvent.assistance = [];
+			vm.currentEvent.attend = false;
+		}else{
+			vm.currentEvent.attend = vm.currentEvent.assistance.indexOf(vm.currentUser.userId) != -1;
+		}
+	}
+	$ionicModal.fromTemplateUrl('templates/eventDetails.html', {
+		scope: $scope,
+		animation: 'slide-in-up'
+	}).then(function(modal) {
+		$scope.modal = modal;
+	});
+	$ionicModal.fromTemplateUrl('templates/comments.html', {
+		scope: $scope,
+		animation: 'slide-in-up'
+	}).then(function(modal) {
+		$scope.modalComments = modal;
+	});
+	function sendComment(){
+		if(vm.messageToSend && vm.messageToSend != ""){
+			firebase.database().ref('comments/' + vm.currentNew.$id).push({
+				image: vm.currentUser.profilePicture ? vm.currentUser.profilePicture: '',
+				message: vm.messageToSend,
+				name: vm.currentUser.username,
+				createdDate: new Date().getTime()
+			});
+			vm.messageToSend = "";
+		}
+	}
+
 })
 .controller('loginCtrl', function($scope, $state) {
 	var vm = this;
